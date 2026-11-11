@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WGLMC — Recursos para Minecraft</title>
+<style>
+:root{--bg:#090909;--panel:#151515;--panel2:#1d1d1d;--red:#e32636;--white:#f5f5f5;--muted:#aaa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:16px/1.5 Arial,sans-serif}
+header{border-bottom:1px solid #292929;background:#0d0d0d;position:sticky;top:0;z-index:5}
+.nav{max-width:1100px;margin:auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-weight:900;font-size:25px;letter-spacing:1px}.logo b{color:var(--red)}
+nav{display:flex;gap:18px;align-items:center}a{color:inherit;text-decoration:none}nav a{color:#ccc;font-size:14px}
+.admin-btn,.primary{background:var(--red);color:white;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer}
+.wrap{max-width:1100px;margin:auto;padding:28px 22px}
+.hero{border:1px solid #292929;border-radius:18px;padding:46px 32px;background:linear-gradient(120deg,#1b1012,#101010 60%,#1b1b1b);position:relative;overflow:hidden}
+.hero:after{content:"W";position:absolute;right:35px;top:-75px;font-size:280px;font-weight:900;color:#ffffff08}
+.eyebrow{color:#ff6570;text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:2px}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.05;margin:12px 0}.hero p{color:#c5c5c5;max-width:540px}
+.searchrow{display:flex;gap:10px;margin-top:22px;max-width:560px}.searchrow input{flex:1}
+input,textarea,select{width:100%;background:#101010;border:1px solid #383838;color:white;border-radius:8px;padding:12px;font:inherit}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin:26px 0}.chip{border:1px solid #383838;background:#151515;color:#ddd;padding:9px 14px;border-radius:30px;cursor:pointer}.chip.active{background:#321316;border-color:var(--red);color:#fff}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:30px 0 16px}.sectionhead h2{margin:0;font-size:24px}.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid #292929;border-radius:13px;overflow:hidden}
+.cover{height:145px;background:linear-gradient(135deg,#40151a,#171717);display:grid;place-items:center;color:#ff6470;font-size:35px;font-weight:900;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover}.cardbody{padding:15px}.tag{color:#ff6570;font-size:11px;font-weight:800;letter-spacing:1px}.card h3{margin:6px 0;font-size:18px}.card p{color:#aaa;font-size:13px;min-height:40px}.download{display:block;text-align:center;background:#262626;border:1px solid #444;border-radius:8px;padding:10px;font-weight:700}.download:hover{background:var(--red);border-color:var(--red)}
+.empty{border:1px dashed #444;border-radius:12px;padding:35px;text-align:center;color:#aaa;grid-column:1/-1}
+footer{border-top:1px solid #292929;color:#888;text-align:center;padding:25px;margin-top:55px;font-size:13px}
+.modal{position:fixed;inset:0;background:#000c;display:none;place-items:center;padding:18px;z-index:10}.modal.show{display:grid}.dialog{width:min(560px,100%);max-height:90vh;overflow:auto;background:#171717;border:1px solid #444;border-radius:15px;padding:22px}.dialog h2{margin-top:0}.formgrid{display:grid;gap:12px}.field label{display:block;font-size:13px;color:#ccc;margin-bottom:5px}.row{display:flex;gap:10px}.row>*{flex:1}.smallbtn{background:#292929;color:#fff;border:1px solid #444;border-radius:8px;padding:10px 13px;cursor:pointer}.danger{background:#4a171b;border-color:#8c2932}
+.notice{font-size:12px;color:#aaa;background:#242424;padding:10px;border-radius:8px}
+@media(max-width:600px){nav a{display:none}.hero{padding:32px 22px}.searchrow{flex-direction:column}.sectionhead{align-items:start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="nav"><a class="logo" href="#"><b>WGL</b>MC</a><nav><a href="#recursos">Recursos</a><a href="#sobre">Sobre</a></nav><button class="admin-btn" onclick="openAdmin()">Painel admin</button></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Minecraft Bedrock • Comunidade</div><h1>SEUS RECURSOS.<br><span style="color:var(--red)">SEU MINECRAFT.</span></h1><p>Encontre texturas, interfaces e addons selecionados para deixar sua experiência no Minecraft Bedrock do seu jeito.</p><div class="searchrow"><input id="search" placeholder="Pesquisar recursos..." oninput="render()"><button class="primary" onclick="render()">Pesquisar</button></div></section>
+<section id="recursos"><div class="sectionhead"><div><div class="eyebrow">Biblioteca WGLMC</div><h2>Recursos disponíveis</h2></div><span class="muted" id="count">0 recursos</span></div><div class="filters" id="filters"></div><div class="grid" id="grid"></div></section>
+<section id="sobre" style="margin-top:42px"><div class="sectionhead"><h2>Sobre o WGLMC</h2></div><p class="muted">Um espaço independente para compartilhar recursos de Minecraft Bedrock. Os arquivos são publicados pela administração do site.</p></section>
+</main>
+<footer>WGLMC © 2026 • Site independente, não afiliado à Mojang ou Microsoft.</footer>
+<div class="modal" id="modal"><div class="dialog"><div class="row" style="align-items:center"><h2 id="modalTitle">Painel administrativo</h2><button class="smallbtn" onclick="closeAdmin()" style="flex:0">Fechar</button></div><div id="adminContent"></div></div></div>
+<script>
+const CATS=['Todos','Texturas','UI','Addons','Mapas','Outros'];let active='Todos',items=JSON.parse(localStorage.getItem('wglmc_items')||'[]');
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem('wglmc_items',JSON.stringify(items))}
+function renderFilters(){$('filters').innerHTML=CATS.map(c=>`<button class="chip ${active===c?'active':''}" onclick="active='${c}';render()">${c}</button>`).join('')}
+function render(){renderFilters();let q=$('search').value.toLowerCase();let shown=items.filter(x=>(active==='Todos'||x.cat===active)&&(`${x.name} ${x.desc} ${x.cat}`).toLowerCase().includes(q));$('count').textContent=shown.length+' recurso(s)';$('grid').innerHTML=shown.length?shown.map(x=>`<article class="card"><div class="cover">${x.cover?`<img src="${x.cover}">`:'WGLMC'}</div><div class="cardbody"><div class="tag">${x.cat.toUpperCase()}</div><h3>${esc(x.name)}</h3><p>${esc(x.desc)}</p><a class="download" href="${x.file}" download="${esc(x.filename)}">↓ Baixar arquivo</a></div></article>`).join(''):'<div class="empty">Ainda não há recursos publicados nesta categoria.<br><span class="muted">Novos downloads aparecerão aqui.</span></div>'}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function openAdmin(){$('modal').classList.add('show');let pass=localStorage.getItem('wglmc_admin_hash');if(!pass)setup();else login()}
+function closeAdmin(){$('modal').classList.remove('show')}
+function setup(){$('modalTitle').textContent='Criar acesso de administrador';$('adminContent').innerHTML=`<div class="formgrid"><p>Crie uma senha para abrir o painel neste navegador.</p><div class="field"><label>Nova senha</label><input id="newpass" type="password" placeholder="Crie uma senha"></div><button class="primary" onclick="createPass()">Criar acesso</button><div class="notice">Protótipo: esta senha fica salva apenas neste navegador. Antes de publicar o site na internet, será necessário configurar autenticação segura no servidor.</div></div>`}
+async function hash(s){let b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function createPass(){let p=$('newpass').value;if(p.length<8){alert('Use pelo menos 8 caracteres.');return}localStorage.setItem('wglmc_admin_hash',await hash(p));adminPanel()}
+function login(){$('modalTitle').textContent='Acesso administrativo';$('adminContent').innerHTML=`<div class="formgrid"><div class="field"><label>Senha</label><input id="loginpass" type="password" placeholder="Sua senha"></div><button class="primary" onclick="checkPass()">Entrar</button></div>`}
+async function checkPass(){if(await hash($('loginpass').value)===localStorage.getItem('wglmc_admin_hash'))adminPanel();else alert('Senha incorreta.')}
+function adminPanel(){$('modalTitle').textContent='Painel WGLMC';$('adminContent').innerHTML=`<form class="formgrid" id="publishForm"><div class="field"><label>Nome da textura / recurso</label><input name="name" required maxlength="70"></div><div class="field"><label>Descrição</label><textarea name="desc" rows="2" maxlength="220"></textarea></div><div class="row"><div class="field"><label>Categoria</label><select name="cat">${CATS.slice(1).map(c=>`<option>${c}</option>`).join('')}</select></div><div class="field"><label>Imagem de capa (opcional)</label><input name="cover" type="file" accept="image/*"></div></div><div class="field"><label>Arquivo .mcpack / .mcaddon / .zip</label><input name="file" type="file" accept=".mcpack,.mcaddon,.zip,application/zip" required></div><button class="primary">Publicar recurso</button><div class="notice">Os arquivos são guardados neste navegador. Esta versão é uma demonstração local; para visitantes de verdade, o site precisará de hospedagem e armazenamento no servidor.</div></form><h3>Publicações (${items.length})</h3><div class="formgrid">${items.map((x,i)=>`<div class="row" style="align-items:center"><span style="flex:1">${esc(x.name)}</span><button class="smallbtn danger" onclick="removeItem(${i})">Excluir</button></div>`).join('')||'<span class="muted">Nenhuma publicação ainda.</span>'}</div><button class="smallbtn" style="margin-top:15px" onclick="changePass()">Trocar senha</button>`;
+$('publishForm').onsubmit=async e=>{e.preventDefault();let f=e.target, file=f.file.files[0], cover=f.cover.files[0];if(!file)return;let data=await readData(file);let coverData=cover?await readData(cover):'';items.unshift({name:f.name.value,desc:f.desc.value,cat:f.cat.value,file:data,filename:file.name,cover:coverData});save();render();adminPanel();};}
+function readData(f){return new Promise((res,rej)=>{let r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+function removeItem(i){if(confirm('Excluir esta publicação?')){items.splice(i,1);save();render();adminPanel()}}
+function changePass(){$('modalTitle').textContent='Trocar senha';$('adminContent').innerHTML=`<div class="formgrid"><div class="field"><label>Nova senha (mínimo 8 caracteres)</label><input id="newpass" type="password"></div><button class="primary" onclick="createPass()">Salvar nova senha</button></div>`}
+render();
+</script>
+</body></html>
